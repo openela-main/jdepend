@@ -30,7 +30,7 @@
 
 Name:           jdepend
 Version:        2.9.1
-Release:        28%{?dist}
+Release:        29%{?dist}
 Summary:        Java Design Quality Metrics
 License:        BSD
 URL:            http://www.clarkware.com/
@@ -40,7 +40,6 @@ Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  java-devel
 BuildRequires:  javapackages-local
 
 %description
@@ -94,6 +93,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Nov 20 2024 Marián Konček <mkoncek@redhat.com> - 2.9.1-29
+- Rebuild with regenerated Requires on Java
+
 * Mon Aug 09 2021 Mohan Boddu <mboddu@redhat.com> - 2.9.1-28
 - Rebuilt for IMA sigs, glibc 2.34, aarch64 flags
   Related: rhbz#1991688
