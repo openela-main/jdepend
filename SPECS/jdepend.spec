@@ -30,7 +30,7 @@
 
 Name:           jdepend
 Version:        2.9.1
-Release:        29%{?dist}
+Release:        32%{?dist}
 Summary:        Java Design Quality Metrics
 License:        BSD
 URL:            http://www.clarkware.com/
@@ -38,6 +38,7 @@ URL:            http://www.clarkware.com/
 Source0:        clarkware-jdepend-5798059.tar.gz
 Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
+ExclusiveArch:  aarch64 ppc64le s390x x86_64 noarch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
@@ -68,11 +69,12 @@ Demonstrations and samples for %{name}.
 find . -name "*.jar" -delete
 # fix strange permissions
 find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
 
 %mvn_file %{name}:%{name} %{name}
 
 %build
-ant jar javadoc
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 jar javadoc
 
 %install
 %mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
@@ -93,6 +95,16 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Dec 04 2024 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.9.1-32
+- Update Java source/target to 1.8
+- Fix unexpected permissions of regular files
+
+* Sat Nov 23 2024 Marián Konček <mkoncek@redhat.com> - 2.9.1-31
+- Add noarch to ExclusiveArch
+
+* Fri Nov 22 2024 Marián Konček <mkoncek@redhat.com> - 2.9.1-30
+- Disable building on i686
+
 * Wed Nov 20 2024 Marián Konček <mkoncek@redhat.com> - 2.9.1-29
 - Rebuild with regenerated Requires on Java
 
